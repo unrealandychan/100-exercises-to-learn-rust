@@ -4,6 +4,26 @@ pub struct WrappingU32 {
     value: u32,
 }
 
+trait From<T> {
+    fn from(value: T) -> Self;
+}
+
+impl From<u32> for WrappingU32 {
+    fn from(value: u32) -> Self {
+        WrappingU32 { value }
+    }
+}
+
+trait Into<T> {
+    fn into(self) -> T;
+}
+
+impl Into<WrappingU32> for u32 {
+    fn into(self) -> WrappingU32 {
+        WrappingU32 { value: self }
+    }
+}
+
 fn example() {
     let wrapping: WrappingU32 = 42.into();
     let wrapping = WrappingU32::from(42);

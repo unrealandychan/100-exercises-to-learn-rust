@@ -11,6 +11,20 @@ pub struct Ticket {
     pub status: String,
 }
 
+trait Clone {
+    fn clone(&self) -> Self;
+}
+
+impl Clone for Ticket {
+    fn clone(&self) -> Self {
+        Ticket {
+            title: self.title.clone(),
+            description: self.description.clone(),
+            status: self.status.clone(),
+        }
+    }
+}
+
 impl Ticket {
     pub fn summary(self) -> Summary {
         Summary {
