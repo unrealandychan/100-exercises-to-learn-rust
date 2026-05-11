@@ -7,15 +7,31 @@
 struct Ticket {
     title: String,
     description: String,
-    status: String,
+    status: Status,
 }
 
+#[derive(Debug, PartialEq, Clone, Copy)]
 enum Status {
-    // TODO: add the missing variants
+    ToDo,
+    InProgress,
+    Done,
+}
+
+impl Status{
+    fn to_string(&self) -> &str {
+        match self {
+            Status::ToDo => "ToDo",
+            Status::InProgress => "InProgress",
+            Status::Done => "Done",
+        }
+    }
+    fn clone (status: &Status) -> Status {
+        status.clone()
+    }
 }
 
 impl Ticket {
-    pub fn new(title: String, description: String, status: String) -> Ticket {
+    pub fn new(title: String, description: String, status: Status) -> Ticket {
         if title.is_empty() {
             panic!("Title cannot be empty");
         }
@@ -27,9 +43,6 @@ impl Ticket {
         }
         if description.len() > 500 {
             panic!("Description cannot be longer than 500 bytes");
-        }
-        if status != "To-Do" && status != "In Progress" && status != "Done" {
-            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
         }
 
         Ticket {
@@ -47,7 +60,7 @@ impl Ticket {
         &self.description
     }
 
-    pub fn status(&self) -> &String {
+    pub fn status(&self) -> &Status {
         &self.status
     }
 }
